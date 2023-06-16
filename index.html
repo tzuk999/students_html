@@ -15,5 +15,56 @@
             res.data.map(student => console.log(`student is: ${student.name}`))
         })
     </script>
+
+
+  <title>Names Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Names will be dynamically inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    // Get the table element
+    const table = document.getElementById("myTable");
+
+    // Make a GET request using Axios
+    axios.get("'https://flask-deploy-basic-main.onrender.com/students'")
+      .then(response => {
+        const namesJSON = response.data;
+
+        // Iterate over each object in the JSON array
+        namesJSON.forEach(item => {
+          // Create a new row for each name
+          const row = table.insertRow();
+
+          // Create a cell for the name
+          const cell = row.insertCell();
+
+          // Set the cell's text to the name value
+          cell.innerText = item.name;
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  </script>
+
+
 </body>
 </html>
